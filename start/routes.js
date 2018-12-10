@@ -845,12 +845,6 @@ Route.get('/gallery-detail/Publish/:id', 'GalleryDetailController.detailPublish'
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: jns_konten
- *         in: formData
- *         description: Jenis Konten (1=Berita, 2=Article, 3=Halaman)
- *         required: true
- *         type: number
- *         format: number
  *       - name: id_konten
  *         in: formData
  *         description: Id Konten
@@ -887,12 +881,6 @@ Route.post('/komentar', 'KomentarController.add')
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: jns_konten
- *         in: query
- *         description: Jenis Konten (1=Berita, 2=Article, 3=Halaman)
- *         required: true
- *         type: number
- *         format: number
  *       - name: id_konten
  *         in: query
  *         description: Id Konten
@@ -1416,7 +1404,7 @@ Route.get('/agenda/:id', 'AgendaController.detail').middleware('CheckToken')
  *   get:
  *     tags:
  *       - Agenda
- *     summary: Agenda Publish
+ *     summary: Detail Publish
  *     consumes:
  *       - application/x-www-form-urlencoded
  *     produces:
@@ -1430,3 +1418,731 @@ Route.get('/agenda/:id', 'AgendaController.detail').middleware('CheckToken')
  *         format: number
  */
 Route.get('/agenda/Publish/:id', 'AgendaController.detailPublish')
+
+/**
+ * @swagger
+ * /link:
+ *   post:
+ *     tags:
+ *       - Link
+ *     summary: Add
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: formData
+ *         description: ID Instasi
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: judul
+ *         in: formData
+ *         description: Judul
+ *         required: true
+ *         type: string
+ *       - name: gambar
+ *         in: formData
+ *         description: Gambar
+ *         required: true
+ *         type: string
+ *       - name: url
+ *         in: formData
+ *         description: Url
+ *         required: true
+ *         type: string
+ */
+Route.post('/link', 'LinkController.add').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link/{id}:
+ *   put:
+ *     tags:
+ *       - Link
+ *     summary: Update
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: judul
+ *         in: formData
+ *         description: Judul
+ *         required: true
+ *         type: string
+ *       - name: gambar
+ *         in: formData
+ *         description: Gambar
+ *         required: true
+ *         type: string
+ *       - name: url
+ *         in: formData
+ *         description: Url
+ *         required: true
+ *         type: string
+ */
+Route.put('/link/:id', 'LinkController.update').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link/{id}:
+ *   delete:
+ *     tags:
+ *       - Link
+ *     summary: Delete
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.delete('/link/:id', 'LinkController.delete').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link:
+ *   get:
+ *     tags:
+ *       - Link
+ *     summary: List
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: judul
+ *         in: query
+ *         description: Judul
+ *         required: false
+ *         type: string
+ *       - name: status_publish
+ *         in: query
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/link', 'LinkController.list').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link/Publish:
+ *   get:
+ *     tags:
+ *       - Link
+ *     summary: List Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: judul
+ *         in: query
+ *         description: Judul
+ *         required: false
+ *         type: string
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/link/Publish', 'LinkController.listPublish')
+
+/**
+ * @swagger
+ * /link/StatusPublish/{id}:
+ *   put:
+ *     tags:
+ *       - Link
+ *     summary: Update Status Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: status_publish
+ *         in: formData
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.put('/link/StatusPublish/:id', 'LinkController.updateStatusPublish').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link/{id}:
+ *   get:
+ *     tags:
+ *       - Link
+ *     summary: Detail
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/link/:id', 'LinkController.detail').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /link/Publish/{id}:
+ *   get:
+ *     tags:
+ *       - Link
+ *     summary: Detail Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/link/Publish/:id', 'LinkController.detailPublish')
+
+/**
+ * @swagger
+ * /menu:
+ *   post:
+ *     tags:
+ *       - Menu
+ *     summary: Add
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: formData
+ *         description: ID Instasi
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: id_parent
+ *         in: formData
+ *         description: Id Parent
+ *         required: true
+ *         type: string
+ *       - name: id_konten
+ *         in: formData
+ *         description: Id Konten
+ *         required: true
+ *         type: string
+ *       - name: nama
+ *         in: formData
+ *         description: Nama
+ *         required: true
+ *         type: string
+ *       - name: url
+ *         in: formData
+ *         description: Url
+ *         required: true
+ *         type: string
+ */
+Route.post('/menu', 'MenuController.add').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu/{id}:
+ *   put:
+ *     tags:
+ *       - Menu
+ *     summary: Update
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: id_parent
+ *         in: formData
+ *         description: Id Parent
+ *         required: true
+ *         type: string
+ *       - name: id_konten
+ *         in: formData
+ *         description: Id Konten
+ *         required: true
+ *         type: string
+ *       - name: nama
+ *         in: formData
+ *         description: Nama
+ *         required: true
+ *         type: string
+ *       - name: url
+ *         in: formData
+ *         description: Url
+ *         required: true
+ *         type: string
+ */
+Route.put('/menu/:id', 'MenuController.update').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu/{id}:
+ *   delete:
+ *     tags:
+ *       - Menu
+ *     summary: Delete
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.delete('/menu/:id', 'MenuController.delete').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu:
+ *   get:
+ *     tags:
+ *       - Menu
+ *     summary: List
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: query
+ *         description: Nama
+ *         required: false
+ *         type: string
+ *       - name: status_publish
+ *         in: query
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/menu', 'MenuController.list').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu/Publish:
+ *   get:
+ *     tags:
+ *       - Menu
+ *     summary: List All Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ */
+Route.get('/menu/Publish', 'MenuController.listPublish')
+
+/**
+ * @swagger
+ * /menu/StatusPublish/{id}:
+ *   put:
+ *     tags:
+ *       - Menu
+ *     summary: Update Status Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: status_publish
+ *         in: formData
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.put('/menu/StatusPublish/:id', 'MenuController.updateStatusPublish').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu/{id}:
+ *   get:
+ *     tags:
+ *       - Menu
+ *     summary: Detail
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/menu/:id', 'MenuController.detail').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /menu/Publish/{id}:
+ *   get:
+ *     tags:
+ *       - Menu
+ *     summary: Detail Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/menu/Publish/:id', 'MenuController.detailPublish')
+
+/**
+ * @swagger
+ * /program-kerja:
+ *   post:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Add
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: formData
+ *         description: ID Instasi
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: formData
+ *         description: nama
+ *         required: true
+ *         type: string
+ *       - name: icon
+ *         in: formData
+ *         description: Icon
+ *         required: true
+ *         type: string
+ *       - name: deskripsi
+ *         in: formData
+ *         description: Deskripsi
+ *         required: true
+ *         type: string
+ *       - name: masa_kerja
+ *         in: formData
+ *         description: Masa Kerja
+ *         required: true
+ *         type: string
+ */
+Route.post('/program-kerja', 'ProgramKerjaController.add').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja/{id}:
+ *   put:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Update
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: formData
+ *         description: nama
+ *         required: true
+ *         type: string
+ *       - name: icon
+ *         in: formData
+ *         description: Icon
+ *         required: true
+ *         type: string
+ *       - name: deskripsi
+ *         in: formData
+ *         description: Deskripsi
+ *         required: true
+ *         type: string
+ *       - name: masa_kerja
+ *         in: formData
+ *         description: Masa Kerja
+ *         required: true
+ *         type: string
+ */
+Route.put('/program-kerja/:id', 'ProgramKerjaController.update').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja/{id}:
+ *   delete:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Delete
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.delete('/program-kerja/:id', 'ProgramKerjaController.delete').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja:
+ *   get:
+ *     tags:
+ *       - Program Kerja
+ *     summary: List
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: query
+ *         description: Nama
+ *         required: false
+ *         type: string
+ *       - name: status_publish
+ *         in: query
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/program-kerja', 'ProgramKerjaController.list').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja/Publish:
+ *   get:
+ *     tags:
+ *       - Program Kerja
+ *     summary: List Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: query
+ *         description: Nama
+ *         required: false
+ *         type: string
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/program-kerja/Publish', 'ProgramKerjaController.listPublish')
+
+/**
+ * @swagger
+ * /program-kerja/StatusPublish/{id}:
+ *   put:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Update Status Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: status_publish
+ *         in: formData
+ *         description: Status Publish (1=Draft, 2=Waiting, 3=Publish)
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.put('/program-kerja/StatusPublish/:id', 'ProgramKerjaController.updateStatusPublish').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja/{id}:
+ *   get:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Detail
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/program-kerja/:id', 'ProgramKerjaController.detail').middleware('CheckToken')
+
+/**
+ * @swagger
+ * /program-kerja/Publish/{id}:
+ *   get:
+ *     tags:
+ *       - Program Kerja
+ *     summary: Program Kerja Publish
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/program-kerja/Publish/:id', 'ProgramKerjaController.detailPublish')

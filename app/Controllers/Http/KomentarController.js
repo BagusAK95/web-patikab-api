@@ -8,7 +8,7 @@ class KomentarController {
     request
   }) {
     try {
-      const data = request.all()
+      const data = request.only(['id_konten', 'email', 'nama', 'isi'])
 
       await Komentar.create(data)
       
@@ -25,10 +25,7 @@ class KomentarController {
       const params = request.get()
 
       const data = await Komentar.query()
-        .where({
-          jns_konten: params.jns_konten,
-          id_konten: params.id_konten
-        })
+        .where('id_konten', params.id_konten)
         .paginate(Number(params.page), Number(params.limit))
 
       return Response.format(true, null, data)
