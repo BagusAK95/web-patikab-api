@@ -18,6 +18,10 @@ class UserController {
           if (data.status == 1) {
             const token = await auth.generate(data)
 
+            data.last_ip = request.header('x-forwarded-for')
+            data.last_login = new Date()
+            await data.save()
+
             return Response.format(true, null, token)
           } else {
             return Response.format(false, 'User tidak aktif', null)
