@@ -136,6 +136,7 @@ class KontenController {
   }) {
     try {
       const user = await auth.getUser()
+      const params = request.get()
 
       let sql = []
       if (user.level == 2) {
