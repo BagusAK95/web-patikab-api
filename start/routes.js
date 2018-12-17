@@ -72,6 +72,180 @@ Route.post('/getToken', 'UserController.getToken')
 
 /**
  * @swagger
+ * /user:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Add
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: formData
+ *         description: ID Instasi
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: nip
+ *         in: formData
+ *         description: Nomor Induk Pegawai
+ *         required: true
+ *         type: string
+ *       - name: nama
+ *         in: formData
+ *         description: Nama
+ *         required: true
+ *         type: string
+ *       - name: level
+ *         in: formData
+ *         description: Level (1=Admin, 2=Operator)
+ *         required: true
+ *         type: string
+ *       - name: status
+ *         in: formData
+ *         description: Status (0=Tidak Aktif, 1=ktif)
+ *         required: false
+ *         type: string
+ */
+Route.post('/user', 'UserController.add').middleware('CheckToken:administrator')
+
+/**
+ * @swagger
+ * /user/{id}:
+ *   put:
+ *     tags:
+ *       - User
+ *     summary: Update
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: id_opd
+ *         in: formData
+ *         description: ID Instasi
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: nip
+ *         in: formData
+ *         description: Nomor Induk Pegawai
+ *         required: true
+ *         type: string
+ *       - name: nama
+ *         in: formData
+ *         description: Nama
+ *         required: true
+ *         type: string
+ *       - name: level
+ *         in: formData
+ *         description: Level (1=Admin, 2=Operator)
+ *         required: true
+ *         type: string
+ *       - name: status
+ *         in: formData
+ *         description: Status (0=Tidak Aktif, 1=ktif)
+ *         required: false
+ *         type: string
+ */
+Route.put('/user/:id', 'UserController.update').middleware('CheckToken:administrator')
+
+/**
+ * @swagger
+ * /user/{id}:
+ *   delete:
+ *     tags:
+ *       - User
+ *     summary: Delete
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.delete('/user/:id', 'UserController.delete').middleware('CheckToken:administrator')
+
+/**
+ * @swagger
+ * /user:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: List
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id_opd
+ *         in: query
+ *         description: ID Instansi
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: nama
+ *         in: query
+ *         description: Nama
+ *         required: false
+ *         type: string
+ *       - name: status
+ *         in: query
+ *         description: Status (0=Tidak Aktif, 1=Aktif)
+ *         required: false
+ *         type: number
+ *         format: number
+ *       - name: page
+ *         in: query
+ *         description: Halaman
+ *         required: true
+ *         type: number
+ *         format: number
+ *       - name: limit
+ *         in: query
+ *         description: Jumlah Data
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/user', 'UserController.list').middleware('CheckToken:administrator')
+
+/**
+ * @swagger
+ * /user/{id}:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Detail
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID
+ *         required: true
+ *         type: number
+ *         format: number
+ */
+Route.get('/user/:id', 'UserController.detail').middleware('CheckToken:administrator')
+
+/**
+ * @swagger
  * /konten:
  *   post:
  *     tags:
